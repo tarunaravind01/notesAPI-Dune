@@ -120,6 +120,7 @@ go run .
 
 ```
 .
+├── .env                      /environment variables 
 ├── Dockerfile                //multistage build dockerfile
 ├── Dockerfile-singleStage    //singlestage build dockerfile
 ├── certs                    
