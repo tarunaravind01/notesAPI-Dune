@@ -183,3 +183,7 @@ go run .
 
 ***
 
+Also for self-signed certs to work you must install the CA certificate in your local machine/client's root store.&#x20;
+
+Steps: [https://github.com/ChristianLempa/cheat-sheets/blob/main/misc/ssl-certs.md#install-the-ca-cert-as-a-trusted-root-ca](https://github.com/ChristianLempa/cheat-sheets/blob/main/misc/ssl-certs.md#install-the-ca-cert-as-a-trusted-root-ca)
+
