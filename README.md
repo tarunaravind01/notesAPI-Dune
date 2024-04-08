@@ -190,3 +190,52 @@ Steps: [https://github.com/ChristianLempa/cheat-sheets/blob/main/misc/ssl-certs.
 
 Also CA certs can also be added to Postman while testing.
 
+## Data Models Implemented
+
+#### User Model
+
+The user data is stored in Postgres, which is a SQL DB and we utilize gorm to interact with it.&#x20;
+
+The user model we use is simplistic and straightforward,
+
+```go
+type User struct {
+	gorm.Model
+	Username 		string `gorm:"unique"`
+	Password 		string
+  }
+```
+
+The usage of `gorm.Model` automatically implements columns like ID, CreatedAt and so on.
+
+The above model equals,
+
+```go
+type User struct {
+	  ID        uint               `gorm:"primaryKey"`
+    	  CreatedAt time.Time
+  	  UpdatedAt time.Time
+  	  DeletedAt gorm.DeletedAt     `gorm:"index"`
+	  Username 		string `gorm:"unique"`
+	  Password 		string
+  }
+```
+
+
+
+#### Notes Model
+
+We store our notes using Mongo. As a more flexible data store would be beneficial for storing notes.
+
+To interact with Mongo we use the official Mongo go-drivers,
+
+```go
+type Note struct {
+	ID      string 		`json:"id" bson:"_id"`
+	UserID  string 		`json:"userId" bson:"userId"`
+	Author	string		`json:"author" bson:"author"`
+	Title   string 		`json:"title" bson:"title"`
+	Content string 		`json:"content" bson:"content"`
+}
+```
+
