@@ -187,3 +187,5 @@ Also for self-signed certs to work you must install the CA certificate in your l
 
 Steps: [https://github.com/ChristianLempa/cheat-sheets/blob/main/misc/ssl-certs.md#install-the-ca-cert-as-a-trusted-root-ca](https://github.com/ChristianLempa/cheat-sheets/blob/main/misc/ssl-certs.md#install-the-ca-cert-as-a-trusted-root-ca)
 
+Also CA certs can also be added to Postman while testing.
+
