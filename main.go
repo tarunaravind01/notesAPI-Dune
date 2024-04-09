@@ -12,6 +12,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/helmet"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/fiber/v3/middleware/csrf"
 )
 
 
@@ -39,6 +40,9 @@ func main() {
 		Key: os.Getenv("COOKIE_ENC_SECRET"),
 	}))
 	
+	//CSRF middleware
+	app.Use(csrf.New())
+
 
 	
 
