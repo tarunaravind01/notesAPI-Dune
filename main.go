@@ -3,10 +3,13 @@ package main
 import (
 	"fmt"
 	"notes-api/initializers"
+	"notes-api/middleware"
 	"notes-api/routes"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/encryptcookie"
+	"github.com/gofiber/fiber/v2/middleware/helmet"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 )
@@ -29,6 +32,14 @@ func main() {
 	// fiber middleware
 	app.Use(logger.New())
 	app.Use(recover.New())
+	app.Use(helmet.New(middleware.HelmetConfig))
+
+	// all the cookies are encrypted
+	app.Use(encryptcookie.New(encryptcookie.Config{
+		Key: os.Getenv("COOKIE_ENC_SECRET"),
+	}))
+	
+
 	
 
 	// routes
