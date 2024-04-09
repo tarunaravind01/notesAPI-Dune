@@ -41,7 +41,7 @@ func main() {
 	}))
 	
 	//CSRF middleware
-	app.Use(csrf.New())
+	app.Use(csrf.New()) //default config is good enough
 
 
 	
