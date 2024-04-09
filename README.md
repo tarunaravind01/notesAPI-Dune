@@ -137,7 +137,9 @@ go run .
 │   └── migrateUserDB.go
 ├── main.go                    //main file
 ├── middleware
-│   └── authMiddleware.go     //Authentication middleware
+│   ├── authMiddleware.go     //JWT auth middleware
+│   ├── helmetConfig.go       //helmet config (security headers)
+│   └── rateLimiter.go        //rate limiting middleware
 ├── models                    //Data models
 │   ├── notes.go
 │   └── user.go
@@ -239,3 +241,42 @@ type Note struct {
 }
 ```
 
+
+
+## Rate Limiting
+
+Added rate limiting for both User related endpoints and Notes related. Different api rates are employed Auth and Notes functionalities.&#x20;
+
+```go
+//rate limiter config for Auth functions
+var AuthRateConfig = limiter.Config{
+	Max: 		20,
+	Expiration: 30 * time.Second,
+	LimiterMiddleware: limiter.SlidingWindow{},
+	LimitReached: rateLimitExceeded,
+}
+
+//rate limiter config for notes endpoint
+var NotesRateConfig = limiter.Config{
+	Max: 		45,
+	Expiration: 30 * time.Second,
+	LimiterMiddleware: limiter.SlidingWindow{},
+	LimitReached: rateLimitExceeded,
+}
+```
+
+The rates can be increased and decreased based on requirements.
+
+## Cookies
+
+For authentication we use a signed JWT that is stored as an Auth cookie. The JWT token is signed using `HS256` .  Also we encrypt the cookies using the `encryptcookie` middleware,
+
+```go
+app.Use(encryptcookie.New(encryptcookie.Config{
+		Key: os.Getenv("COOKIE_ENC_SECRET"),
+	}))
+```
+
+***
+
+Also `helmet` middleware is used to add security headers to our API responses.&#x20;
